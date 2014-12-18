@@ -1,0 +1,9 @@
+#fixx buzz
+
+100.times do |x|
+    text = ""
+    text << "fizz " if x % 3 == 0
+    text << "buzz" if x % 5 == 0
+    puts "#{x} #{text}"
+  end
+    
