@@ -1,0 +1,11 @@
+(1..100).each do |i|
+  temp = ""
+  temp << "crackle" if i % 3 == 0
+  temp << "pop" if i % 5 == 0
+  if   temp.length == 0  # no finds
+    puts i.to_s
+  else
+    puts temp
+  end
+end
+  
