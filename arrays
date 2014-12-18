@@ -1,0 +1,55 @@
+14_array_extensions.rb
+BEGIN{
+
+class Array
+  def sum
+    result = 0
+    self.each do |i|
+      result += i
+    end
+    return result
+  end
+
+  def square
+    result = Array.new
+    index=0
+    self.each do |i|
+      result[index] =   i*i
+      index = index + 1
+    end
+    return result
+  end
+
+  def square!
+    for i in 0..self.length-1
+      self[i] = self[i] * self[i]
+    end
+  end
+end
+
+#test scaffolding
+=begin
+  input = []
+  puts "the sum of #{input} = #{input.sum}"
+
+  input = [1,2,4]
+  puts "the sum of #{input} = #{input.sum}"
+
+  input = []
+  puts "the square of #{input} = #{input.square}"
+
+  input = [1,2,4]
+  new = input.square
+  puts "the square of <#{input}> #{new}"
+
+  input = []
+  print  " before square !#{input} "
+  input.square!
+  puts " after square! #{input} "
+
+  input = [1,2,4]
+  print  " before square!#{input} "
+  input.square!
+  puts " after square!#{input} "
+=end
+}
