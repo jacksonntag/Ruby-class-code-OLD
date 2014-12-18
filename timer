@@ -1,0 +1,58 @@
+#09_timer.rb
+BEGIN{
+
+$MINS = 60
+$HOURS = 60 * $MINS
+$MAX_TIME = $HOURS * 24
+
+class Time_str
+  attr_accessor :input_numb
+  def out_put
+    @out_put
+  end
+  def hours
+    @hours
+  end
+
+  def initialize(input_numb)  # in seconds
+    if ((input_numb > $MAX_TIME) || (input_numb < 0))
+      @out_put = "input number must be  >  0 AND < 86,400 (24 hours)"
+      return
+    end
+    @out_put = get_hrs(input_numb)
+    @out_put << get_mins(input_numb)
+    @out_put << get_secs(input_numb).chop!
+    return
+  end
+
+  def pad_zero (in_numb) #insert a leading '0' for numbers < 10
+    out=""
+    out = "0" if in_numb < 10
+    return out << in_numb.to_s + ":"
+  end
+
+  def get_hrs (in_numb)
+    @hours = in_numb / $HOURS
+    return pad_zero(@hours)
+  end
+
+  def get_mins(in_numb)
+    @mins = (in_numb - ($HOURS * @hours))/60
+    return pad_zero(@mins)
+  end
+
+  def get_secs(in_numb)
+    @secs = (in_numb - (($HOURS * @hours) + (@mins*$MINS)))
+    return pad_zero(@secs)
+  end
+end
+# test scaffolding
+=begin
+input_numbs =  Array[4000,66,12,0,86399,125,99,355,199,5234000]
+
+input_numbs.each  do |number|
+new_str = Time_str.new(number)
+  puts "seconds <#{number}> time value <#{new_str.out_put}>"
+end
+=end
+}
