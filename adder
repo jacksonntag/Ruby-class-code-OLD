@@ -1,0 +1,10 @@
+
+def adder(iters=1,y) 
+     return yield iters, y
+end
+output = adder(9,3){|x,y| x.times do
+  y +=1
+  end
+}
+
+puts output
