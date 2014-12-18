@@ -1,0 +1,90 @@
+EGIN{
+  class RPNCalculator  
+    def get_result(list)
+      i=0
+      op=""
+      for i in 0..list.length do
+      if list[i] == "+" || list[i] == "-" || list[i]== "/" || list[i] == "*"
+        op = list.delete_at(i)
+        break
+      else
+        i+=1
+        if i == list.length
+          #if op == ""
+          #  puts "calculator empty"
+           # ans = nil
+          #else
+           list.shift
+          #end
+          return
+        end
+      end
+    end
+  #    puts list
+      index = i-2
+      opa = list[index].to_f
+      list.delete_at(index)
+      if (index - 1) < 0
+        index=0
+      end
+      opb = list[index].to_f
+      list.delete_at(index)
+
+      case op
+        when '+'
+          ans = opa.to_f + opb.to_f
+          puts " #{opa.to_f}  + #{opb.to_f}"
+        when '-'
+          ans = opa.to_f - opb.to_f
+          puts " #{opa.to_f}  -  #{opb.to_f}"
+        when '/'
+          ans = opa.to_f / opb.to_f
+          puts " #{opa.to_f}   /  #{opb.to_f}"
+        when '*'
+          ans = opa.to_f * opb.to_f
+          puts " #{opa.to_f}  *  #{opb.to_f}"
+        else
+          puts "calculator empty"
+          #ans = nil
+      end
+      @result = ans
+      list.unshift(ans)
+      return ans
+    end
+
+    def result
+      @result
+    end
+
+    def initialize(input)
+      list=[]
+      puts "in init #{input}"
+      input.each do |op|
+        list.push(op)
+      end
+      while list.any?
+        ans = get_result(list)
+      end
+      return#(ans)
+    end
+end
+ input = ["2","3","-"] #-1
+  input = ["4","5","-"] #-1
+  input = ["2","3","/"]#.6666
+  #input = ["2","3","4","+","+"] # 9
+  #input= ["2","3","4","-","+"]#1******
+ #input= ["2","3","4","/","*"]#1.5
+  #input = ["1","2","+","3","*"]#9
+ #input = ["1","2","3","*","+"] #7
+#  input = ["2","3","+"] #5
+ # input = ["2","3","/"]#.6666
+  #input = ["4","5","-"] #-1
+
+  input = ["4","5","-"] #-1
+  input = ["2","3","/"]#.6666
+  input = ["1","2","3","*","+","4","5", "-","/"]# *****
+
+#  puts input
+  answer = RPNCalculator.new(input)
+  puts "x->#{answer.result}"
+}
