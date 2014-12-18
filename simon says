@@ -1,0 +1,129 @@
+EGIN{
+
+def short_list(input) # skip over the small words for capitals
+  list = ["a", "an", "the", "in", "of", "is","or","it", "to", "with", "at", "and","but"]
+  list.each do |word|
+    if input == word
+      return true
+    end
+  end
+  return false
+end
+
+class Simon_says
+  def id_self(input)
+    puts "#{self.class} + #{input}"
+  end
+  def work(input)
+    i=0
+    str =""
+    while i < input.length
+     str << input[i]
+     str << " "
+      i=i+1
+    end
+    puts " #{self.class} >> #{str}"
+  end
+end
+
+class Shout
+  def id_self(input)
+    puts "#{self.class} + #{input}"
+  end
+  def work (input)
+    i=0
+    str =""
+    while i < input.length
+      str << input[i]
+      str << " "
+      i=i+1
+    end
+    puts " #{self.class} >> #{str.upcase}"
+  end
+end
+
+class Repeat
+  def id_self(input)
+    puts "#{self.class} + #{input}"
+  end
+  def work (input)
+    numb = 2
+    if input.last.to_i > 0  # is a repeat value at the end of the string
+      numb = input.last.to_i
+    end
+    puts "#{self.class} >  #{(input.first+" ")*numb} "
+  end
+end
+
+class Start_word
+  def id_self( input)
+    puts "#{self.class} + #{input}"
+  end
+  def work(input)
+#    puts "#{self.class} + #{input}"
+    if (input.first.to_i == 0)
+      puts "missing repeat variable, enter a # and a string...."
+      return
+    else
+      numb = input.first.to_i
+    end
+    temp = input[1]
+    puts "#{temp[0,input.first.to_i]}"
+  end
+end
+
+class First_word
+  def id_self(input)
+    puts "#{self.class} + #{input}"
+  end
+  def work (input)
+    puts "#{self.class} >>  #{input.first}"
+  end
+end
+
+class Titleize
+  def id_self(input)
+    puts "#{self.class} + #{input}"
+  end
+  def work (input)
+    out_str= input.first.capitalize + " "
+    input.shift
+    input.each do |word|
+      if (short_list(word))
+        out_str << word + " "
+      else
+        out_str  << word.capitalize + " "
+      end
+    end
+    out_str.chop!
+    puts "#{self.class} <#{out_str}>"
+  end
+ end
+
+func_list = [Simon_says.new, Shout.new, Repeat.new, Start_word.new, First_word.new, Titleize.new]
+
+def list_cmds (menu) # display a list of commands to invoke function
+  i = 0
+  while i < (menu.length)-1
+    index = i+1
+    puts "#{i+1}.  #{menu[i].class}"
+    i = i+1
+  end
+  print "#{index+1}.  #{menu[i].class} ======(& string)========>"
+end
+
+
+
+while (1)
+  list_cmds func_list
+  input = gets
+  args  = input.split(" ")
+  cmd = args[0].to_i
+  args.shift
+  break if (cmd < 1)  || (cmd > func_list.length)
+  func_list[cmd-1].work (args)
+end
+
+
+
+}
