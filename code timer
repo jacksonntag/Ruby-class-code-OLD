@@ -1,0 +1,101 @@
+ 06 Performance monitor
+BEGIN{
+  require "time"
+  @eleven__am = Time.parse("2011-1-2 11:00:00")
+
+#11111111
+  def measure1()
+    start_time = Time.now
+    yield
+    return (Time.now - start_time)
+  end
+  diff = measure1() {puts "in yield/measure1"}
+  puts "time to run measure1 is #{diff}"
+
+#2 empty block
+  def measure2()
+    start_time = Time.now
+    yield
+    diff = Time.now - start_time
+    return diff
+  end
+  diff = measure2() do
+  end
+  puts "time to run measure2 is #{diff}"
+
+# 3      one second sleep
+  def measure3()
+    start_time = Time.now
+    yield
+    end_time = Time.now
+    return (end_time - start_time)
+  end
+  diff = measure3{sleep(1)}
+  puts "Time to run in measure3 was #{diff}"
+
+  #444444444444444
+  def measure4()
+    start_time = Time.now
+    puts start_time
+    seconds = 60
+    end_time = yield(start_time, seconds)
+    puts end_time
+    return end_time - start_time
+  end
+  diff = measure4 {|time, seconds| time+=seconds}
+  puts "Elapsed time in measure4 was #{diff}"
+
+  #5
+  def measure5
+    back = 43
+    back = yield(back)
+    return back
+  end
+
+  diff = measure5 {|x|
+    n=0
+    x.times do
+      n+=1
+    end
+  }
+  puts "Back value in measure5 was #{diff}"
+
+# 666666
+  def measure6
+    runs = [5,6,7,8]
+    return yield(runs)
+  end
+
+  avg = measure6 { |list|
+    sum=0.0
+    list.each  do |x|
+      sum+=x.to_f
+    end
+    avg = sum / list.length
+  }
+  puts "AVG back from  measure6 was #{avg}"
+
+  #77777777777777777777777
+  def measure7
+    eleven_am = Time.parse("2014-11-20 11:00:00")
+    loops = rand(10) + 2
+    start_time = eleven_am #Time.parse("2014-11-20 11:00:00")
+    avg_time  = yield(loops, start_time)
+    return avg_time
+  end
+
+  avg = measure7 { |loops, start_time|
+    end_time = Time.now
+    loops.times do
+      delay = rand(10)
+      end_time += delay
+    end
+    avg = ((end_time - start_time) / loops).to_f
+  }
+  avg = avg.round(2)
+  print "AVG seconds from  measure7 was #{avg.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse} ==> "
+  mm, ss = avg.divmod(60)
+  hh, mm = mm.divmod(60)
+  dd, hh = hh.divmod(24)
+  puts "%d days, %d hours, %d minutes and %d seconds" % [dd, hh, mm, ss]
+}
