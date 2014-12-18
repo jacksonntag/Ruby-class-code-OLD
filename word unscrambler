@@ -1,0 +1,32 @@
+ '06_word_unscrambler'
+BEGIN{
+
+  def unscrambler(word, dict)
+    puts "in func <#{word}, #{dict}>"
+    out_str = ""
+
+    #word2 = word.chars.sort.join
+    word2 = word.split("").sort
+    dict.each do |term|
+     # term2 = term.chars.sort.join
+      term2 = term.split("").sort
+      puts "#{word2}  #{term2}"
+      if word2 == term2
+        out_str << term + " "
+      end
+    end
+    return out_str
+  end
+
+  #word = Array.new
+  word = "urtn"
+  dict = ["numb", "turn", "runt", "nurt"]
+
+  word = "cat"
+  dict = ["dog", "act", "rat", "tac", "DDDDD"]
+
+  output = unscrambler(word, dict)
+  puts "#{word} matches <#{output}>"
+
+
+}
