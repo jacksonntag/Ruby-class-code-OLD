@@ -1,0 +1,102 @@
+EGIN{
+  def create_hash
+    return Hash.new
+  end
+
+  def prt_list(list, *args)# default is present order
+    if (args.length == 0)
+      return list.map
+    else
+      data_str = []
+      temp_str = list.sort.map #second variable presumes aplha sort order
+      temp_str.each do |key,value|
+        data_str << "[" + key + "]"  + value + "\n"# " "fruit"\n[fish] "aquatic animal"\n[zebra] "African land animal with stripes"}
+      end
+      return list.sort.map #data_str
+    end
+  end
+
+  def add_entry(list, key, data)
+    list[key] = data
+  end
+
+def find_entry( list, partial)
+  data = []
+  if partial == ""
+    return  "No matches on key value"
+  end
+
+  temp = list.select { |key, value| key.start_with? partial }
+  temp.each do |key,value|
+    data <<  "<"+ partial + "> matches on " + key
+  end
+  return data
+end
+
+  #test scaffolding
+=begin
+  def list_keywords(list)
+    out_str =""
+    data = list.sort.map
+    data.each do |keyword|
+      out_str << keyword[0] + " "
+    end
+    out_str.chomp!
+    return out_str
+  end
+
+  list = create_hash
+  if list.length > 0
+    puts "empty hash has data"
+  else
+    puts "new, empty, hash created"
+  end
+  query = "shrimp"
+  puts " <#{query}> in list  1 is = #{find_entry(list,query)}"
+  query = "fi"
+  puts " <#{query}> in list 2 is = #{find_entry(list,query)}"
+  add_entry( list,"fish", "an aquatic animal")
+  x="zebra"
+  y="African land animal with stripes"
+  add_entry(list, x,y)
+  add_entry(list, "great", "remarkable")
+  add_entry(list, "no def","")
+  add_entry(list, "fiend","an evil character")
+  add_entry( list,"fish", "an aquatic animal")
+  add_entry( list,"shrimp", "a swimming dinner")
+  add_entry( list,"ball", "fuzzy tennis")
+  add_entry( list,"flat", "paper is")
+  add_entry( list,"aplha", "the frst one")
+  add_entry( list,"foreplay" , "is fun!!!")
+  i=0
+
+  query = "shrimp"
+  puts " <#{query}> in list 3 is = #{find_entry(list,query)}"
+  query = "zebra"
+   puts " <#{query}> in list 4is = #{find_entry(list,query)}"
+  query = "dog"
+  puts " <#{query}> in list 5 is = #{find_entry(list,query)}"
+  query = ""
+  puts " <#{query}> in list 6 is = #{find_entry(list,query)}"
+
+  puts "un sorted order"
+  data = prt_list(list) # default is existing order
+  data.each do |key,value|
+    puts " #{key} => #{value}"
+  end
+
+  puts "begin sorted order <<<<<<<<<<<<<<<<<<<<<<<<<<<"
+  alpha_sort= true
+  data = prt_list(list, alpha_sort) # a second input produces alpha order
+  data.each do |key,value|
+    puts " #{key} => #{value}"
+  end
+  puts "end sorted order<<<<<<<<<<<<<<<<<<<<<<<<"
+
+  partial = "fi"
+  puts find_entry( list,partial)
+
+  print "List Keywords: "
+  puts list_keywords(list)
+=end
+}
