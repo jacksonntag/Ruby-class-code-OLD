@@ -1,0 +1,39 @@
+BEGIN{
+  class Book
+    attr_accessor :in_str
+
+    def new_title
+      @new_title
+    end
+
+    def initialize(in_str)
+      @new_title = each_word(in_str.capitalize).chop
+    end
+
+    def is_small(in_word)
+      small_words = ["a", "an","and","the","in","this","that","is","it","of","A","AN","AND","THE","IN","WAS","THIS","THAT","OF","An","And","The","In","Was","This","That","Of","Is","It"]
+      if small_words.include?(in_word) == true
+        return in_word + " "
+      end
+      return in_word.capitalize + " "
+    end
+
+    def each_word(in_str)
+      temp = in_str.split
+      new = temp.shift + " "
+      temp.each do |word|
+        new << is_small(word)  #"removes caps from preposutions"
+      end
+      return new
+    end
+end
+# test scaffolding
+=begin
+in_list = ["inferno","reelin' in the years","ball Four","THIS IS IT", "alexander the great", "to kill a mockingbird","to eat an apple a day","war and peace", "love in the time of cholera","what i wish i knew when i was 20","the man in the iron mask"]
+
+in_list.each do |member|
+    newbook = Book.new(member)
+    puts "<#{member}><#{newbook.new_title}>"
+end
+=end
+}
