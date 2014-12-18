@@ -1,0 +1,81 @@
+BEGIN{
+  Y = "ay "
+  def parse(input)
+    output = ""
+    temp=""
+    temp2 = ""
+    input.each do |word|
+
+      cap_flag = false
+      if word[0] >= 'A' && word[0] <= 'Z'
+        cap_flag = true
+        word = word.downcase
+      end
+
+      position = /sch/ =~ word
+      if position == 0
+        temp << word[3..word.length] + "sch" + Y
+        if cap_flag == true
+          temp.capitalize!
+        end
+        output << temp
+      else
+        position = /qu/ =~ word
+        if position == 0  #starts the word
+          temp = word[2..word.length] + "qu" + Y
+          if cap_flag == true
+            temp.capitalize!
+          end
+          output << temp
+        else
+          if position == 1  # follows a consonant
+            first_char = word[0]
+            temp << word[3..word.length] + first_char + "qu" + Y
+            if cap_flag == true
+              temp.capitalize!
+            end
+            output << temp
+          else
+            position = /[aeiou]/ =~ word
+            if position == 0
+              temp = word + Y
+              if cap_flag == true
+                temp.capitalize!
+              end
+              output << temp
+            else
+              index = 0
+              temp2 = ""
+              temp = word
+              while (/[bcdfghjklmnpqrstvwxyz]/ =~ temp[index..temp.length] ) != nil
+                if (/[aeiou]/ =~ temp[index+1]) != nil
+                  temp2 << temp[index+1, temp.length] + temp[0..index] + Y
+                  if cap_flag == true
+                    temp2.capitalize!
+                  end
+                  output << temp2
+                  break
+                else
+                  index = index +1
+                end
+              end
+            end
+            end
+        end
+      end
+
+    end
+    return output
+  end
+
+  #test scaffolding
+=begin
+  while(1)
+    print "Enter the string to translate ==>"
+    temp = gets
+    break if temp.length < 2
+    input = temp.split
+    puts "Pig version = <#{parse(input)}>"
+  end
+=end
+}
